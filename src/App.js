@@ -32,7 +32,7 @@ class App extends Component {
     this.state = {
       input: '',
       imageUrl: '',
-      box: {}
+      box: {},
     }
   }
 
@@ -50,7 +50,8 @@ class App extends Component {
   }
 
   displayFaceBox = (box) => {
-    this.setState = ({box: box})
+    console.log(box);
+    this.setState({box: box})
   }
 
   onInputChange = (event) => {
@@ -59,7 +60,10 @@ class App extends Component {
 
   onButtonSumbit = () => {
     this.setState({imageUrl: this.state.input});
-    app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
+    app.models
+      .predict(
+          Clarifai.FACE_DETECT_MODEL,
+          this.state.input)
       .then(response => this.displayFaceBox(this.calculateFaceLocation(response)))
       .catch(err => console.log(err));
   }
@@ -74,7 +78,7 @@ class App extends Component {
         <Logo />
         <Rank />
         <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSumbit}/>
-        <FaceReconigntion box={this.state.box} imageUrl={this.state.imageUrl}/>
+        <FaceReconigntion imageUrl={this.state.imageUrl} box={this.state.box}/>
       </div>
     );
   }
